@@ -73,3 +73,12 @@ void Player::attack(Character* target) {
         std::cout << target->getName() << " has " << target->getHealth() << " HP left \n";
     }
 }
+int Player::getHealth() const {
+    return health;
+}
+void Player::decreaseHealth(int amount) {
+    health -= amount;
+    if (health < 0) {
+        health = 0;
+    }
+}

@@ -4,6 +4,7 @@
 #include "Character.h"
 #include "Location.h"
 #include "NullRoom.h"
+#include "Room.h"
 
 class Player : public Character {
 public:
@@ -27,6 +28,8 @@ public:
     // Action towards character
     void attack(Character* target);
 
+    void decreaseHealth(int amount);
+    int getHealth() const;
 
     Player(const Player &) = delete;
 
@@ -39,7 +42,7 @@ private:
     int health;
 
     Player() : Character("You", "You are a person, alike in dignity to any other, but uniquely you.", 100),
-               currentRoom(new NullRoom()) {}
+               currentRoom(new NullRoom()), health(100) {}
 };
 
 

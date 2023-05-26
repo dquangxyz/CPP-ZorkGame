@@ -9,12 +9,14 @@
 #include "Item.h"
 #include <vector>
 
+class Player;
 class Character : public GameObject {
 public:
     Character(const std::string &, const std::string &, const int &);
     void talk() const;
     void decreaseHealth(int amount);
     int getHealth() const;
+    void counterAttack(Player* player, int damage);
 
 protected:
 //    std::vector<Item*> inventory;

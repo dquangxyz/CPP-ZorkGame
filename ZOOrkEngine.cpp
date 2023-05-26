@@ -177,6 +177,9 @@ void ZOOrkEngine::handleAttackCommand(const std::vector<std::string>& arguments)
 
     if (character) {
         player->attack(character);
+        if (character->getHealth() > 0){
+            character->counterAttack(player, 20);
+        }
     } else {
         std::cout << "There is no character named '" << characterName << "' in this room.\n";
     }
