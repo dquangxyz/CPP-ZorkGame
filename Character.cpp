@@ -33,15 +33,11 @@ void Character::counterAttack(Player* player, int damage) {
         return;
     }
 
-    // Perform the counterattack
     std::cout << getName() << " counterattacks you by " << damage << " HP!\n";
     player->decreaseHealth(damage);
-
-    // Check if the player is defeated
+    player->showHealth();
     if (player->getHealth() <= 0) {
         std::cout << "You have been defeated!\n";
-    } else {
-        std::cout <<  "You have " << player->getHealth() << " HP remaining.\n";
     }
 }
 

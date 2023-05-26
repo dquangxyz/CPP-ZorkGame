@@ -82,3 +82,6 @@ void Player::decreaseHealth(int amount) {
         health = 0;
     }
 }
+void Player::showHealth() const {
+    std::cout << "Your current health: " << health << " HP\n";
+}

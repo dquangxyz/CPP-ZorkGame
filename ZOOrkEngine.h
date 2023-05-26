@@ -35,6 +35,8 @@ private:
 
     void handleInventoryCommand(std::vector<std::string>);
 
+    void handleHealthCommand();
+
     void handleTalkCommand(const std::vector<std::string>& arguments);
 
     void handleAttackCommand(const std::vector<std::string>& arguments);

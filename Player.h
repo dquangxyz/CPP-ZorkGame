@@ -30,6 +30,7 @@ public:
 
     void decreaseHealth(int amount);
     int getHealth() const;
+    void showHealth() const;
 
     Player(const Player &) = delete;
 

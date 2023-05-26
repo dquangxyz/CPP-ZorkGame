@@ -31,6 +31,8 @@ void ZOOrkEngine::run() {
             handleQuitCommand(arguments);
         } else if (command == "inventory") {
             handleInventoryCommand(arguments);
+        } else if (command == "health") {
+            handleHealthCommand();
         } else if (command == "talk") {
             if (arguments.size() > 1 && arguments[0] == "to") {
                 arguments.erase(arguments.begin());
@@ -147,6 +149,11 @@ void ZOOrkEngine::handleDropCommand(std::vector<std::string> arguments) {
 void ZOOrkEngine::handleInventoryCommand(std::vector<std::string> arguments) {
     player->showInventory();
 }
+
+void ZOOrkEngine::handleHealthCommand() {
+    player->showHealth();
+}
+
 
 void ZOOrkEngine::handleTalkCommand(const std::vector<std::string>& arguments) {
     if (arguments.empty()) {
