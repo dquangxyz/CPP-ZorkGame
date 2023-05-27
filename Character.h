@@ -1,7 +1,3 @@
-//
-// Created by Richard Skarbez on 5/7/23.
-//
-
 #ifndef ZOORK_CHARACTER_H
 #define ZOORK_CHARACTER_H
 
@@ -13,6 +9,7 @@ class Player;
 class Character : public GameObject {
 public:
     Character(const std::string &, const std::string &, const int &);
+    virtual ~Character();
     void talk() const;
     void decreaseHealth(int amount);
     int getHealth() const;

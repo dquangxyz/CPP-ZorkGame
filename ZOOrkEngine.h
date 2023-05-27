@@ -1,7 +1,3 @@
-//
-// Created by Richard Skarbez on 5/7/23.
-//
-
 #ifndef ZOORK_ZOORKENGINE_H
 #define ZOORK_ZOORKENGINE_H
 
@@ -40,8 +36,6 @@ private:
     void handleTalkCommand(const std::vector<std::string>& arguments);
 
     void handleAttackCommand(const std::vector<std::string>& arguments);
-
-
     static std::vector<std::string> tokenizeString(const std::string&);
 
     static std::string makeLowercase(std::string);

@@ -1,7 +1,3 @@
-//
-// Created by Richard Skarbez on 5/7/23.
-//
-
 #ifndef ZOORK_ITEM_H
 #define ZOORK_ITEM_H
 
@@ -18,7 +14,8 @@ public:
     virtual void use();
 
     void setUseCommand(std::shared_ptr<Command>);
-    void show();
+    void showDescription();
+    std::string getName() const;
 
 
 protected:

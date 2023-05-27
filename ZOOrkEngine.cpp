@@ -1,4 +1,5 @@
 #include "ZOOrkEngine.h"
+#include "Door.h"
 
 #include <utility>
 
@@ -46,7 +47,6 @@ void ZOOrkEngine::run() {
         } else {
             std::cout << "I don't understand that command.\n";
         }
-
     }
 }
 
@@ -68,10 +68,21 @@ void ZOOrkEngine::handleGoCommand(std::vector<std::string> arguments) {
         direction = arguments[0];
     }
 
+    // Check if there is door
     Room* currentRoom = player->getCurrentRoom();
     auto passage = currentRoom->getPassage(direction);
-    player->setCurrentRoom(passage->getTo());
-    passage->enter();
+    if (std::shared_ptr<Door> door = std::dynamic_pointer_cast<Door>(passage)) {
+        if (player->hasItem(door->getRequiredKey()->getName())) {
+            std::cout << "You have opened the door.\n";
+            player->setCurrentRoom(passage->getTo());
+            passage->enter();
+        } else {
+            std::cout << "The door is locked. You need a key to open it.\n";
+        }
+    } else {
+        player->setCurrentRoom(passage->getTo());
+        passage->enter();
+    }
 }
 
 //
@@ -93,12 +104,11 @@ void ZOOrkEngine::handleLookCommand(std::vector<std::string> arguments) {
             std::cout << "- " << character->getName() << '\n';
         }
     } else {
-        // Look at a specific target
         std::string target = arguments[0];
         Item* item = currentRoom->getItem(target);
 
         if (item) {
-            item->show();
+            item->showDescription();
         } else {
             Character* character = currentRoom->getCharacter(target);
             if (character) {
@@ -118,17 +128,33 @@ void ZOOrkEngine::handleTakeCommand(std::vector<std::string> arguments) {
         return;
     }
 
-    std::string itemName = arguments[0];
+    std::string itemName;
+    // Combine all arguments to form the item name
+    for (const std::string& arg : arguments) {
+        itemName += arg + " ";
+    }
+    // Remove trailing whitespace
+    itemName = itemName.substr(0, itemName.size() - 1);
+
     Room* currentRoom = player->getCurrentRoom();
     Item* item = currentRoom->getItem(itemName);
 
-    if (item) {
-        player->addItem(item);
-        currentRoom->removeItem(itemName);
-    } else {
-        std::cout << "The item '" << itemName << "' is not in this room.\n";
+    if (!item) {
+        // Check if the item name contains the word 'key'
+        if (itemName.find("key") != std::string::npos) {
+            std::cout << "The key '" << itemName << "' is not in this room.\n";
+        } else {
+            std::cout << "The item '" << itemName << "' is not in this room.\n";
+        }
+        return;
     }
+
+    player->addItem(item);
+    currentRoom->removeItem(itemName);
+    std::cout << "You have taken the " << itemName << ".\n";
 }
+
+
 
 void ZOOrkEngine::handleDropCommand(std::vector<std::string> arguments) {
     if (arguments.empty()) {

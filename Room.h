@@ -35,6 +35,9 @@ public:
     void addCharacter(Character* character);
     void removeCharacter(Character* character);
     Character* getCharacter(const std::string& characterName);
+
+    bool hasPassage(const std::string& direction) const;
+
 protected:
     std::map<std::string, std::shared_ptr<Passage>> passageMap;
 };

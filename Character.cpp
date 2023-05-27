@@ -2,6 +2,8 @@
 #include "Player.h"
 
 Character::Character(const std::string &n, const std::string &d, const int &health) : GameObject(n, d), health(health) {};
+Character::~Character() {};
+
 
 void Character::talk() const {
     std::cout << getName() << ": Hello there! How can I assist you?\n";

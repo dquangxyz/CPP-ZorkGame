@@ -73,6 +73,13 @@ Character* Room::getCharacter(const std::string& characterName) {
     return nullptr;
 }
 
+bool Room::hasPassage(const std::string& direction) const {
+    // Check if a passage exists in the specified direction
+    return (passageMap.find(direction) != passageMap.end());
+}
+
+
+
 
 
 
