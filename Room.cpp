@@ -4,6 +4,7 @@
 
 #include "NullPassage.h"
 #include "Room.h"
+#include "Door.h"
 
 #include <utility>
 
@@ -77,6 +78,16 @@ bool Room::hasPassage(const std::string& direction) const {
     // Check if a passage exists in the specified direction
     return (passageMap.find(direction) != passageMap.end());
 }
+
+std::string Room::getDoorDirection() const {
+    for (const auto& passagePair : passageMap) {
+        if (std::shared_ptr<Door> door = std::dynamic_pointer_cast<Door>(passagePair.second)) {
+            return door->getDirection();
+        }
+    }
+    return "unknown";
+}
+
 
 
 

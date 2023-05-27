@@ -36,6 +36,8 @@ public:
     void removeCharacter(Character* character);
     Character* getCharacter(const std::string& characterName);
 
+    std::string getDoorDirection() const;
+
     bool hasPassage(const std::string& direction) const;
 
 protected:

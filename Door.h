@@ -9,9 +9,15 @@ public:
 
     virtual std::string getDescription() const;
     virtual Item* getRequiredKey() const;
-
+    void setOpenState(bool open) {
+        openState = open;
+    }
+    bool isDoorOpen() const;
+    std::string getDirection() const;
 private:
     std::string description;
     Item* requiredKey;
+    bool openState;
+    std::string direction;
 };
 

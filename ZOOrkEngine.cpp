@@ -44,12 +44,17 @@ void ZOOrkEngine::run() {
                 arguments.erase(arguments.begin());
             }
             handleAttackCommand(arguments);
-        } else {
+        } else if (command == "open") {
+            if (arguments.size() > 1 && arguments[0] == "the") {
+                arguments.erase(arguments.begin());
+            }
+            handleOpenCommand(arguments);
+        }
+        else {
             std::cout << "I don't understand that command.\n";
         }
     }
 }
-
 void ZOOrkEngine::handleGoCommand(std::vector<std::string> arguments) {
     std::string direction;
     if (arguments[0] == "n" || arguments[0] == "north") {
@@ -68,16 +73,17 @@ void ZOOrkEngine::handleGoCommand(std::vector<std::string> arguments) {
         direction = arguments[0];
     }
 
-    // Check if there is door
+    // Check if there is a door in the specified direction
     Room* currentRoom = player->getCurrentRoom();
     auto passage = currentRoom->getPassage(direction);
     if (std::shared_ptr<Door> door = std::dynamic_pointer_cast<Door>(passage)) {
-        if (player->hasItem(door->getRequiredKey()->getName())) {
+        if (door->isDoorOpen()) {
             std::cout << "You have opened the door.\n";
             player->setCurrentRoom(passage->getTo());
             passage->enter();
         } else {
             std::cout << "The door is locked. You need a key to open it.\n";
+            return; // Return without moving to the next room
         }
     } else {
         player->setCurrentRoom(passage->getTo());
@@ -85,7 +91,6 @@ void ZOOrkEngine::handleGoCommand(std::vector<std::string> arguments) {
     }
 }
 
-//
 
 void ZOOrkEngine::handleLookCommand(std::vector<std::string> arguments) {
     Room* currentRoom = player->getCurrentRoom();
@@ -249,3 +254,29 @@ std::string ZOOrkEngine::makeLowercase(std::string input) {
 
     return output;
 }
+
+void ZOOrkEngine::handleOpenCommand(std::vector<std::string> arguments) {
+    if (arguments.empty()) {
+        std::cout << "Open what?\n";
+        return;
+    }
+    std::string target = arguments[0];
+    Room* currentRoom = player->getCurrentRoom();
+    std::string doorDirection = currentRoom->getDoorDirection();
+    auto passage = currentRoom->getPassage(doorDirection);
+    if (std::shared_ptr<Door> door = std::dynamic_pointer_cast<Door>(passage)) {
+        if (door->isDoorOpen()) {
+            std::cout << "The door is already open.\n";
+        } else {
+            if (player->hasItem(door->getRequiredKey()->getName())) {
+                std::cout << "You have opened the door.\n";
+                door->setOpenState(true);
+            } else {
+                std::cout << "The door is locked. You need a key to open it.\n";
+            }
+        }
+    } else {
+        std::cout << "You can't open that.\n";
+    }
+}
+
