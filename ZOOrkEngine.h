@@ -31,6 +31,8 @@ private:
     void handleTalkCommand(const std::vector<std::string>& arguments);
     void handleAttackCommand(const std::vector<std::string>& arguments);
     void handleScoreCommand();
+    void handleHelpCommand();
+
     static std::vector<std::string> tokenizeString(const std::string&);
 
     static std::string makeLowercase(std::string);

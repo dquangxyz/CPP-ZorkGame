@@ -53,11 +53,14 @@ void ZOOrkEngine::run() {
             handleOpenCommand(arguments);
         } else if (command == "score") {
             handleScoreCommand();
+        } else if (command == "help") {
+            handleHelpCommand();
         } else {
             std::cout << "I don't understand that command.\n";
         }
     }
 }
+
 void ZOOrkEngine::handleGoCommand(std::vector<std::string> arguments) {
     std::string direction;
     if (arguments[0] == "n" || arguments[0] == "north") {
@@ -360,7 +363,24 @@ void ZOOrkEngine::handleUseCommand(const std::vector<std::string> arguments) {
     } else {
         std::cout << "Impossible to use this item";
     }
-
 }
+
+void ZOOrkEngine::handleHelpCommand() {
+    std::cout << "Available commands:\n";
+    std::cout << "- go [direction]: Move to a different room in the specified direction.\n";
+    std::cout << "- look/inspect/examine [item/room]: Examine an item or the current room.\n";
+    std::cout << "- take/get [item]: Take an item from the current room.\n";
+    std::cout << "- drop [item]: Drop an item from your inventory into the current room.\n";
+    std::cout << "- quit: Quit the game.\n";
+    std::cout << "- inventory: Display the items in your inventory.\n";
+    std::cout << "- use [item]: Use an item from your inventory.\n";
+    std::cout << "- health: Check your current health.\n";
+    std::cout << "- talk [to] [character]: Initiate a conversation with a character.\n";
+    std::cout << "- attack [character]: Attack a character.\n";
+    std::cout << "- open [door]: Open a door.\n";
+    std::cout << "- score: Check your current score.\n";
+    std::cout << "- help: Display the list of available commands.\n";
+}
+
 
 

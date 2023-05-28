@@ -59,13 +59,13 @@ int main() {
 
     // Create items
     Item* sword = new Item("sword", "A sharp sword", "weapon");
-    north_of_house->addItem(sword);
+    attic->addItem(sword);
 
     Item* axe = new Item("axe", "A strong axe", "weapon");
     clearing1->addItem(axe);
 
     Item* spear = new Item("spear", "A long spear", "weapon");
-    attic->addItem(spear);
+    north_of_house->addItem(spear);
 
     Item* redKey = new Item("red key", "Key to open red doors", "key");
     west_of_house->addItem(redKey);
@@ -89,7 +89,7 @@ int main() {
     Character* joker = new Character("joker", "A smiling joker wearing a dark suit", 80, 20);
     secret_chamber->addCharacter(joker);
 
-    Character* kingkong = new Character("kingkong", "A towering and powerful giant creature with immense strength", 300, 35);
+    Character* kingkong = new Character("kingkong", "A towering and powerful giant creature with immense strength", 200, 30);
     canyon_bottom->addCharacter(kingkong);
 
     Character* clawn = new Character("clawn", "A mischievous clown with colorful attire and a big red nose", 50, 5);
