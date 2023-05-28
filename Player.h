@@ -32,6 +32,9 @@ public:
     int getHealth() const;
     void showHealth() const;
 
+    void setCurrentWeapon(Item* item);
+    Item* getCurrentWeapon() const;
+
     Player(const Player &) = delete;
 
     Player &operator=(const Player &) = delete;
@@ -41,6 +44,7 @@ private:
     Room* currentRoom;
     std::vector<Item*> inventory;
     int health;
+    Item* currentWeapon;
 
     Player() : Character("You", "You are a person, alike in dignity to any other, but uniquely you.", 100),
                currentRoom(new NullRoom()), health(100) {}

@@ -32,6 +32,8 @@ void ZOOrkEngine::run() {
             handleQuitCommand(arguments);
         } else if (command == "inventory") {
             handleInventoryCommand(arguments);
+        } else if (command == "use") {
+            handleUseCommand(arguments);
         } else if (command == "health") {
             handleHealthCommand();
         } else if (command == "talk") {
@@ -298,4 +300,24 @@ void ZOOrkEngine::handleOpenCommand(std::vector<std::string> arguments) {
         std::cout << "You can't open that.\n";
     }
 }
+
+void ZOOrkEngine::handleUseCommand(const std::vector<std::string> arguments) {
+    if (arguments.empty()) {
+        std::cout << "Usage: use [item]\n";
+        return;
+    }
+
+    std::string itemName = arguments[0];
+    Item* item = player->getItem(itemName);
+
+    if (!item) {
+        std::cout << "You don't have the item '" << itemName << "'.\n";
+        return;
+    }
+
+    player->setCurrentWeapon(item);
+
+    std::cout << "You are now using the " << itemName << ".\n";
+}
+
 

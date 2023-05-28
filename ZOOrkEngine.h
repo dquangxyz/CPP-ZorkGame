@@ -20,22 +20,15 @@ private:
     Player *player;
 
     void handleGoCommand(std::vector<std::string>);
-
     void handleLookCommand(std::vector<std::string>);
-
     void handleTakeCommand(std::vector<std::string>);
-
     void handleDropCommand(std::vector<std::string>);
-
     void handleQuitCommand(std::vector<std::string>);
-
     void handleInventoryCommand(std::vector<std::string>);
-
+    void handleUseCommand(std::vector<std::string>);
     void handleHealthCommand();
     void handleOpenCommand(std::vector<std::string>);
-
     void handleTalkCommand(const std::vector<std::string>& arguments);
-
     void handleAttackCommand(const std::vector<std::string>& arguments);
     static std::vector<std::string> tokenizeString(const std::string&);
 

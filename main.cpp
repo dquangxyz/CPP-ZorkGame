@@ -74,6 +74,9 @@ int main() {
     Character* troll = new Character("troll", "A huge troll", 150);
     south_of_house->addCharacter(troll);
 
+    Character* joker = new Character("joker", "A smiling joker wearing a dark suit", 80);
+    secret_chamber->addCharacter(joker);
+
     // Create door
     Door* door1 = new Door(north_of_house.get(), secret_chamber.get(), "north", "A locked wooden door.", redKey);
     std::shared_ptr<Door> sharedDoor1(door1);

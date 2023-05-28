@@ -58,12 +58,12 @@ void Player::showInventory() const {
 void Player::attack(Character* target) {
     int damage = 0;
 
-    if (hasItem("sword")) {
+    if (currentWeapon && currentWeapon->getName() == "sword") {
         damage = 50;
-    } else if (hasItem("axe")) {
+    } else if (currentWeapon && currentWeapon->getName() == "axe") {
         damage = 30;
     } else {
-        std::cout << "You don't have a weapon to attack.\n";
+        std::cout << "You don't have a weapon to attack. Equip and use your weapon if you have.\n";
         return;
     }
 
@@ -90,4 +90,10 @@ void Player::decreaseHealth(int amount) {
 }
 void Player::showHealth() const {
     std::cout << "Your current health: " << health << " HP\n";
+}
+void Player::setCurrentWeapon(Item* item) {
+    currentWeapon = item;
+}
+Item* Player::getCurrentWeapon() const {
+    return currentWeapon;
 }
