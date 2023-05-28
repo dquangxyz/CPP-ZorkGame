@@ -355,6 +355,7 @@ void ZOOrkEngine::handleUseCommand(const std::vector<std::string> arguments) {
             player->increaseHealth(30);
             std::cout << "You have recovered 30 HP.\n";
         }
+        player->removeItem(itemName);
         player->showHealth();
     } else {
         std::cout << "Impossible to use this item";
