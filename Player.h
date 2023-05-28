@@ -28,7 +28,7 @@ public:
 
     // Action towards character
     void attack(Character* target);
-
+    void increaseHealth(int amount);
     void decreaseHealth(int amount);
     int getHealth() const;
     void showHealth() const;
@@ -52,7 +52,7 @@ private:
     int score = 0;
     std::vector<Item*> droppedItems;
 
-    Player() : Character("You", "You are a person, alike in dignity to any other, but uniquely you.", 100),
+    Player() : Character("You", "You are a person, alike in dignity to any other, but uniquely you.", 100, 0),
                currentRoom(new NullRoom()), health(100) {}
 };
 

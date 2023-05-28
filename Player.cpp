@@ -17,9 +17,15 @@ void Player::addItem(Item* item) {
         return;
     }
     inventory.push_back(item);
-    score += 10;
-}
 
+   if (item->getTag() == "drink"){
+       score += 15;
+   } else if (item->getTag() == "weapon"){
+       score += 10;
+   } else {
+       score += 5;
+   }
+}
 
 void Player::removeItem(const std::string& itemName) {
     for (auto it = inventory.begin(); it != inventory.end(); ++it) {
@@ -71,6 +77,8 @@ void Player::attack(Character* target) {
 
     if (currentWeapon && currentWeapon->getName() == "sword") {
         damage = 50;
+    } else if (currentWeapon && currentWeapon->getName() == "spear") {
+        damage = 40;
     } else if (currentWeapon && currentWeapon->getName() == "axe") {
         damage = 30;
     } else {
@@ -99,6 +107,9 @@ void Player::decreaseHealth(int amount) {
     if (health < 0) {
         health = 0;
     }
+}
+void Player::increaseHealth(int amount) {
+    health += amount;
 }
 void Player::showHealth() const {
     std::cout << "Your current health: " << health << " HP\n";

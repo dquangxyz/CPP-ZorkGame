@@ -58,31 +58,49 @@ int main() {
     Passage::createBasicPassage(rocky_ledge.get(), canyon_bottom.get(), "down", true);
 
     // Create items
-    Item* sword = new Item("sword", "A sharp sword");
+    Item* sword = new Item("sword", "A sharp sword", "weapon");
     north_of_house->addItem(sword);
 
-    Item* axe = new Item("axe", "A strong axe");
+    Item* axe = new Item("axe", "A strong axe", "weapon");
     clearing1->addItem(axe);
 
-    Item* redKey = new Item("red key", "Key to open red doors");
+    Item* spear = new Item("spear", "A long spear", "weapon");
+    attic->addItem(spear);
+
+    Item* redKey = new Item("red key", "Key to open red doors", "key");
     west_of_house->addItem(redKey);
 
-    Item* greenKey = new Item("green key", "Key to open green doors");
+    Item* greenKey = new Item("green key", "Key to open green doors", "key");
     behind_house->addItem(greenKey);
 
+    Item* soda = new Item("soda", "A soft drink that is fairly good for your health", "drink");
+    kitchen->addItem(soda);
+
+    Item* juice = new Item("juice", "A delicious drink that is quite good for your health", "drink");
+    secret_chamber->addItem(juice);
+
+    Item* beer = new Item("beer", "A fantastic drink that is extremely good for your health", "drink");
+    canyon_view->addItem(beer);
+
     // Create character
-    Character* troll = new Character("troll", "A huge troll", 150);
+    Character* troll = new Character("troll", "A huge troll", 150, 25);
     south_of_house->addCharacter(troll);
 
-    Character* joker = new Character("joker", "A smiling joker wearing a dark suit", 80);
+    Character* joker = new Character("joker", "A smiling joker wearing a dark suit", 80, 20);
     secret_chamber->addCharacter(joker);
 
+    Character* kingkong = new Character("kingkong", "A towering and powerful giant creature with immense strength", 300, 35);
+    canyon_bottom->addCharacter(kingkong);
+
+    Character* clawn = new Character("clawn", "A mischievous clown with colorful attire and a big red nose", 50, 5);
+    living_room->addCharacter(clawn);
+
     // Create door
-    Door* door1 = new Door(north_of_house.get(), secret_chamber.get(), "north", "A locked wooden door.", redKey);
+    Door* door1 = new Door(north_of_house.get(), secret_chamber.get(), "north", "A locked red wooden door.", redKey);
     std::shared_ptr<Door> sharedDoor1(door1);
     north_of_house->addPassage("north", sharedDoor1);
 
-    Door* door2 = new Door(behind_house.get(), kitchen.get(), "west", "A locked wooden door.", greenKey);
+    Door* door2 = new Door(behind_house.get(), kitchen.get(), "west", "A locked green wooden door.", greenKey);
     std::shared_ptr<Door> sharedDoor2(door2);
     behind_house->addPassage("west", sharedDoor2);
 

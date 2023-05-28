@@ -136,6 +136,14 @@ void ZOOrkEngine::handleLookCommand(std::vector<std::string> arguments) {
 
         if (item) {
             item->showDescription();
+        } else if (target == "door") {  // Check if the target is "door"
+            if (doorDirection == "unknown") {
+                std::cout << "There is no door in this room.\n";
+            } else {
+                auto passage = currentRoom->getPassage(doorDirection);
+                std::shared_ptr<Door> door = std::dynamic_pointer_cast<Door>(passage);
+                std::cout << door->getDescription() << '\n';
+            }
         } else {
             Character* character = currentRoom->getCharacter(target);
             if (character) {
@@ -251,7 +259,7 @@ void ZOOrkEngine::handleAttackCommand(const std::vector<std::string>& arguments)
     if (character) {
         player->attack(character);
         if (character->getHealth() > 0){
-            character->counterAttack(player, 20);
+            character->counterAttack(player, character->getAttackDamage());
             if (player->getHealth() <= 0){
                 gameOver = true;
                 return;
@@ -323,7 +331,7 @@ void ZOOrkEngine::handleOpenCommand(std::vector<std::string> arguments) {
 
 void ZOOrkEngine::handleUseCommand(const std::vector<std::string> arguments) {
     if (arguments.empty()) {
-        std::cout << "Usage: use [item]\n";
+        std::cout << "What do you want to use?\n";
         return;
     }
 
@@ -333,9 +341,25 @@ void ZOOrkEngine::handleUseCommand(const std::vector<std::string> arguments) {
     if (!item) {
         std::cout << "You don't have the item '" << itemName << "'.\n";
         return;
+    } else if (item->getTag() == "weapon"){
+        player->setCurrentWeapon(item);
+        std::cout << "You are now using the " << itemName << ".\n";
+    } else if (item->getTag() == "drink"){
+        if (item->getName() == "soda"){
+            player->increaseHealth(10);
+            std::cout << "You have recovered 10 HP.\n";
+        } else if (item->getName() == "juice"){
+            player->increaseHealth(20);
+            std::cout << "You have recovered 20 HP.\n";
+        } else if (item->getName() == "beer"){
+            player->increaseHealth(30);
+            std::cout << "You have recovered 30 HP.\n";
+        }
+        player->showHealth();
+    } else {
+        std::cout << "Impossible to use this item";
     }
-    player->setCurrentWeapon(item);
-    std::cout << "You are now using the " << itemName << ".\n";
+
 }
 
 
