@@ -30,7 +30,6 @@ void Character::decreaseHealth(int amount) {
     }
 }
 void Character::counterAttack(Player* player, int damage) {
-    // Check if the player is null or already defeated
     if (!player || player->getHealth() <= 0) {
         return;
     }
@@ -40,6 +39,8 @@ void Character::counterAttack(Player* player, int damage) {
     player->showHealth();
     if (player->getHealth() <= 0) {
         std::cout << "You have been defeated!\n";
+        std::cout << "Game over!\n";
+        exit(0);
     }
 }
 

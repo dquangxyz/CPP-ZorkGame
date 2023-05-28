@@ -22,7 +22,7 @@ void ZOOrkEngine::run() {
 
         if (command == "go") {
             handleGoCommand(arguments);
-        } else if ((command == "look") || (command == "inspect")) {
+        } else if ((command == "look") || (command == "inspect") || (command == "examine")) {
             handleLookCommand(arguments);
         } else if ((command == "take") || (command == "get")) {
             handleTakeCommand(arguments);
