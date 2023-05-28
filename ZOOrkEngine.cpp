@@ -51,8 +51,9 @@ void ZOOrkEngine::run() {
                 arguments.erase(arguments.begin());
             }
             handleOpenCommand(arguments);
-        }
-        else {
+        } else if (command == "score") {
+            handleScoreCommand();
+        } else {
             std::cout << "I don't understand that command.\n";
         }
     }
@@ -180,23 +181,35 @@ void ZOOrkEngine::handleTakeCommand(std::vector<std::string> arguments) {
     std::cout << "You have taken the " << itemName << ".\n";
 }
 
-
-
 void ZOOrkEngine::handleDropCommand(std::vector<std::string> arguments) {
     if (arguments.empty()) {
         std::cout << "Please specify the item you want to drop.\n";
         return;
     }
 
-    std::string itemName = arguments[0];
-    if (player->hasItem(itemName)) {
-        Item* item = player->getItem(itemName);
-        player->removeItem(itemName);
-        player->getCurrentRoom()->addItem(item);
-    } else {
-        std::cout << "You don't have the item '" << itemName << "'.\n";
+    std::string itemName;
+    // Combine all arguments to form the item name
+    for (const std::string& arg : arguments) {
+        itemName += arg + " ";
     }
+    // Remove trailing whitespace
+    itemName = itemName.substr(0, itemName.size() - 1);
+
+    Room* currentRoom = player->getCurrentRoom();
+    Item* item = player->getItem(itemName);
+
+    if (!item) {
+        std::cout << "You don't have the item '" << itemName << "'.\n";
+        return;
+    }
+    if (player->getCurrentWeapon() == item) {
+        player->setCurrentWeapon(nullptr);
+    }
+    player->removeItem(itemName);
+    player->addDroppedItem(item);
+    currentRoom->addItem(item);
 }
+
 
 void ZOOrkEngine::handleInventoryCommand(std::vector<std::string> arguments) {
     player->showInventory();
@@ -205,8 +218,9 @@ void ZOOrkEngine::handleInventoryCommand(std::vector<std::string> arguments) {
 void ZOOrkEngine::handleHealthCommand() {
     player->showHealth();
 }
-
-
+void ZOOrkEngine::handleScoreCommand() {
+    std::cout << "Score: " << player->getScore() << '\n';
+}
 void ZOOrkEngine::handleTalkCommand(const std::vector<std::string>& arguments) {
     if (arguments.empty()) {
         std::cout << "Whom do you want to talk to?\n";
@@ -238,6 +252,10 @@ void ZOOrkEngine::handleAttackCommand(const std::vector<std::string>& arguments)
         player->attack(character);
         if (character->getHealth() > 0){
             character->counterAttack(player, 20);
+            if (player->getHealth() <= 0){
+                gameOver = true;
+                return;
+            }
         }
     } else {
         std::cout << "There is no character named '" << characterName << "' in this room.\n";
@@ -253,6 +271,7 @@ void ZOOrkEngine::handleQuitCommand(std::vector<std::string> arguments) {
     std::string quitStr = makeLowercase(input);
 
     if (quitStr == "y" || quitStr == "yes") {
+        std::cout << "Your final score is " << player->getScore() << '\n';
         gameOver = true;
     }
 }
@@ -292,6 +311,7 @@ void ZOOrkEngine::handleOpenCommand(std::vector<std::string> arguments) {
             if (player->hasItem(door->getRequiredKey()->getName())) {
                 std::cout << "You have opened the door.\n";
                 door->setOpenState(true);
+                player->setScore(player->getScore()+20);
             } else {
                 std::cout << "The door is locked. You need a key to open it.\n";
             }
@@ -314,9 +334,7 @@ void ZOOrkEngine::handleUseCommand(const std::vector<std::string> arguments) {
         std::cout << "You don't have the item '" << itemName << "'.\n";
         return;
     }
-
     player->setCurrentWeapon(item);
-
     std::cout << "You are now using the " << itemName << ".\n";
 }
 

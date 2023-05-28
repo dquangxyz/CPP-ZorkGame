@@ -40,7 +40,7 @@ void Character::counterAttack(Player* player, int damage) {
     if (player->getHealth() <= 0) {
         std::cout << "You have been defeated!\n";
         std::cout << "Game over!\n";
-        exit(0);
+        std::cout << "Your final score is " << player->getScore() << '\n';
     }
 }
 

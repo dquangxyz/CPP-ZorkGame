@@ -11,9 +11,15 @@ Room* Player::getCurrentRoom() const {
 }
 
 void Player::addItem(Item* item) {
+    // Check if the item has been dropped before
+    if (std::find(droppedItems.begin(), droppedItems.end(), item) != droppedItems.end()) {
+        inventory.push_back(item);
+        return;
+    }
     inventory.push_back(item);
-    std::cout << "You have taken the " << item->getName() << ".\n";
+    score += 10;
 }
+
 
 void Player::removeItem(const std::string& itemName) {
     for (auto it = inventory.begin(); it != inventory.end(); ++it) {
@@ -55,6 +61,11 @@ void Player::showInventory() const {
     }
 }
 
+void Player::addDroppedItem(Item* item) {
+    droppedItems.push_back(item);
+}
+
+
 void Player::attack(Character* target) {
     int damage = 0;
 
@@ -72,6 +83,7 @@ void Player::attack(Character* target) {
 
     if (target->getHealth() <= 0) {
         std::cout << target->getName() << " has been defeated!\n";
+        score += 50;
         Room* currentRoom = getCurrentRoom();
         currentRoom->removeCharacter(target);
     } else {
@@ -96,4 +108,10 @@ void Player::setCurrentWeapon(Item* item) {
 }
 Item* Player::getCurrentWeapon() const {
     return currentWeapon;
+}
+void Player::setScore(int num) {
+    score = num;
+}
+int Player::getScore() const {
+    return score;
 }

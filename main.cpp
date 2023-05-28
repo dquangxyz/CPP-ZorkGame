@@ -29,7 +29,7 @@ int main() {
     Passage::createBasicPassage(start.get(), north_of_house.get(), "north", false);
     Passage::createBasicPassage(start.get(), west_of_house.get(), "west", false);
 
-    Passage::createBasicPassage(south_of_house.get(), behind_house.get(), "north", false);
+    Passage::createBasicPassage(south_of_house.get(), behind_house.get(), "north", true);
     Passage::createBasicPassage(south_of_house.get(), west_of_house.get(), "west", true);
     Passage::createBasicPassage(south_of_house.get(), forest1.get(), "east", true);
 

@@ -24,6 +24,7 @@ public:
     bool hasItem(const std::string& itemName) const;
     Item* getItem(const std::string& itemName) const;
     void showInventory() const;
+    void addDroppedItem(Item* item);
 
     // Action towards character
     void attack(Character* target);
@@ -35,6 +36,9 @@ public:
     void setCurrentWeapon(Item* item);
     Item* getCurrentWeapon() const;
 
+    void setScore(int num);
+    int getScore() const;
+
     Player(const Player &) = delete;
 
     Player &operator=(const Player &) = delete;
@@ -45,6 +49,8 @@ private:
     std::vector<Item*> inventory;
     int health;
     Item* currentWeapon;
+    int score = 0;
+    std::vector<Item*> droppedItems;
 
     Player() : Character("You", "You are a person, alike in dignity to any other, but uniquely you.", 100),
                currentRoom(new NullRoom()), health(100) {}
