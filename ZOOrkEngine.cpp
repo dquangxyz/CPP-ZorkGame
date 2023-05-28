@@ -94,20 +94,39 @@ void ZOOrkEngine::handleGoCommand(std::vector<std::string> arguments) {
 
 void ZOOrkEngine::handleLookCommand(std::vector<std::string> arguments) {
     Room* currentRoom = player->getCurrentRoom();
+    std::string doorDirection = currentRoom->getDoorDirection();
 
     if (arguments.empty()) {
-        // No specific target, print current room description, items, and characters
+        // Display if there is a door
         currentRoom->enter();
-
-        std::cout << "Items in the room:\n";
-        for (Item* item : currentRoom->items) {
-            std::cout << "- " << item->getName() << '\n';
+        if (currentRoom->getName() != "forest" && currentRoom->getName() != "clearing") {
+            if (doorDirection == "unknown") {
+                std::cout << "There is no door in this room.\n";
+            } else {
+                std::cout << "There is a door in the " << doorDirection << " of this room.\n";
+            }
         }
 
-        std::cout << "Characters in the room:\n";
-        for (Character* character : currentRoom->characters) {
-            std::cout << "- " << character->getName() << '\n';
+        // Display if there is any item
+        if (!currentRoom->items.empty()) {
+            std::cout << "Items in the room:\n";
+            for (Item* item : currentRoom->items) {
+                if (item != nullptr) {
+                    std::cout << "- " << item->getName() << '\n';
+                }
+            }
         }
+
+        // Display if there is any character
+        if (!currentRoom->characters.empty()) {
+            std::cout << "Characters in the room:\n";
+            for (Character* character : currentRoom->characters) {
+                if (character != nullptr) {
+                    std::cout << "- " << character->getName() << '\n';
+                }
+            }
+        }
+
     } else {
         std::string target = arguments[0];
         Item* item = currentRoom->getItem(target);

@@ -16,8 +16,9 @@ class Passage;
 class Room : public Location {
 public:
     Room(const std::string &, const std::string &);
-
     Room(const std::string &, const std::string &, std::shared_ptr<Command>);
+
+    std::string getName() const;
 
     // For item
     std::vector<Item*> items;
@@ -42,6 +43,7 @@ public:
 
 protected:
     std::map<std::string, std::shared_ptr<Passage>> passageMap;
+    std::string name;
 };
 
 

@@ -1,7 +1,3 @@
-//
-// Created by Richard Skarbez on 5/7/23.
-//
-
 #include "NullPassage.h"
 #include "Room.h"
 #include "Door.h"
@@ -9,11 +5,15 @@
 #include <utility>
 
 
-Room::Room(const std::string &n, const std::string &d) : Location(n, d) {
+Room::Room(const std::string &n, const std::string &d) : Location(n, d), name(n) {
     enterCommand = std::make_shared<RoomDefaultEnterCommand>(this);
 }
+Room::Room(const std::string &n, const std::string &d, std::shared_ptr<Command> c) : Location(n, d, std::move(c)), name(n) {}
 
-Room::Room(const std::string &n, const std::string &d, std::shared_ptr<Command> c) : Location(n, d, std::move(c)) {}
+std::string Room::getName() const {
+    return name;
+}
+
 
 // Method related to Passage
 void Room::addPassage(const std::string &direction, std::shared_ptr<Passage> p) {
