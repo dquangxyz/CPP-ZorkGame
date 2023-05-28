@@ -56,23 +56,29 @@ void Player::showInventory() const {
 }
 
 void Player::attack(Character* target) {
-    // Check if the player has a sword item
-    if (!hasItem("sword")) {
-        std::cout << "You don't have a sword to attack.\n";
+    int damage = 0;
+
+    if (hasItem("sword")) {
+        damage = 50;
+    } else if (hasItem("axe")) {
+        damage = 30;
+    } else {
+        std::cout << "You don't have a weapon to attack.\n";
         return;
     }
-    int damage = 50;
+
     target->decreaseHealth(damage);
-    std::cout << "You attack " << target->getName() << " with " << damage << " damage! \n";
+    std::cout << "You attack " << target->getName() << " with " << damage << " damage!\n";
 
     if (target->getHealth() <= 0) {
         std::cout << target->getName() << " has been defeated!\n";
         Room* currentRoom = getCurrentRoom();
         currentRoom->removeCharacter(target);
     } else {
-        std::cout << target->getName() << " has " << target->getHealth() << " HP left \n";
+        std::cout << target->getName() << " has " << target->getHealth() << " HP left.\n";
     }
 }
+
 int Player::getHealth() const {
     return health;
 }

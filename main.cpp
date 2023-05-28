@@ -24,9 +24,6 @@ int main() {
     std::shared_ptr<Room> canyon_bottom = std::make_shared<Room>("canyon-bottom", "You are in the Canyon Bottom.\n");
     std::shared_ptr<Room> secret_chamber = std::make_shared<Room>("secret-chamber", "You are in the Secret Chamber.\n");
 
-
-
-
     // Relation between the rooms
     Passage::createBasicPassage(start.get(), south_of_house.get(), "south", false);
     Passage::createBasicPassage(start.get(), north_of_house.get(), "north", false);
@@ -63,6 +60,9 @@ int main() {
     // Create items
     Item* sword = new Item("sword", "A sharp sword");
     north_of_house->addItem(sword);
+
+    Item* axe = new Item("axe", "A strong axe");
+    clearing1->addItem(axe);
 
     Item* redKey = new Item("red key", "Key to open red doors");
     west_of_house->addItem(redKey);
